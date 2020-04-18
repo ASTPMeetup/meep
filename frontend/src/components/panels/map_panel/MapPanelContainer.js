@@ -1,37 +1,25 @@
 import React from 'react';
-import { withScriptjs, withGoogleMap, GoogleMap, Circle } from "react-google-maps";
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import { connect } from 'react-redux';
 import { MeepService } from '../../../services/meep_service';
 import { selectProject } from '../../../actions/project_details';
 import { withRouter} from 'react-router-dom';
 import { selectProjectLocations } from '../../../selectors/locations';
 import { GoogleMapsAPIKey } from '../../../../private/google_maps';
+import { ProjectTypePropsMap } from '../../../utilities/project_types';
 
 const meep_service = new MeepService();
-
-const mapState = {
-    marker : {
-        strokeColor: "hsl(125, 100%, 14%)",
-        fillColor:'hsl(125, 100%, 14%)',
-        fillOpacity: "0.7",
-        radius: 500,
-        strokeWeight: 1
-    },
-    center: {
-        "lat": 39.0997,
-        "lng": -94.5786
-    },
-    zoom: 10
-}
 
 const mapStateToProps = (state, ownProps) => {
     return { 
         ...ownProps,
-        locations: state.locations[0] ? selectProjectLocations(state.locations[0], state.filters) : []
+        locations: state.locations[0] ? selectProjectLocations(state.locations[0], state.filters) : [],
+        map_state: state.map_state
     }
 };
 
 const MyMapComponent = connect(mapStateToProps)(withScriptjs(withGoogleMap((props) => {
+    const { map_state, locations } = props;
 
     const dispatchProjectSummary = (location) => {
         meep_service.getProjectDetailsById(location.project_id).then(data => {
@@ -42,20 +30,13 @@ const MyMapComponent = connect(mapStateToProps)(withScriptjs(withGoogleMap((prop
 
     return (
         <GoogleMap
-            defaultZoom={mapState.zoom}
-            defaultCenter={mapState.center} autoUpdate>
-            {props.locations.map(location => {
-                return <Circle
-                            key={location.key}
-                            onClick={()=>dispatchProjectSummary(location)}
-                            strokeWeight={mapState.marker.strokeWeight}
-                            options={{
-                                fillColor: mapState.marker.fillColor, 
-                                fillOpacity: mapState.marker.fillOpacity, 
-                                strokeColor: mapState.marker.strokeColor
-                            }}
-                            center={location.center}
-                            radius={mapState.marker.radius}></Circle>
+            zoom={map_state.zoom}
+            center={map_state.center}>
+            {locations.map(location => {
+                const iconTypeColor = ProjectTypePropsMap[location.type] ? ProjectTypePropsMap[location.type].color : 'default';
+                const iconTypeImg = `/images/markers/${iconTypeColor}-marker.svg`;
+                return <Marker key={location.key} icon={iconTypeImg} onClick={()=>dispatchProjectSummary(location)} position={location.center}>
+                       </Marker>
             })}
         </GoogleMap>
     )

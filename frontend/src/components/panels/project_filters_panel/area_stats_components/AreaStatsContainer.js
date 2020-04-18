@@ -1,9 +1,23 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { selectProjectLocations } from '../../../../selectors/locations';
+import SubHeader from "../../../helpers/SubHeader";
 
-const StatsContainer = () => (
-    <div className="stats-container text-center">
-        <p><em>Filter the map view to the stats for the area</em></p>
-    </div>
-);
+const StatsContainer = ({ number_of_locations }) => {
+    const stat_string = number_of_locations + ' of projects in your area';
 
-export default StatsContainer;
+    return (
+        <div className="stats-container text-center">
+            <SubHeader Text={stat_string}/>
+        </div>
+    )
+};
+
+const mapStateToProps = (state, ownProps) => {
+    return { 
+        ...ownProps,
+        number_of_locations: state.locations[0] ? selectProjectLocations(state.locations[0], state.filters).length : 0
+    }
+};
+
+export default connect(mapStateToProps)(StatsContainer);

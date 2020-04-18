@@ -4,14 +4,18 @@
             .row {
                 padding: 0.5rem;
                 cursor: pointer;
+
+                p {
+                    font-size: 0.85rem;
+                }
                 &:hover {
                     background: #f2f2f2;
                 }
-                .project-card-header {
-                    margin-top: 0.5rem;
-                    font-weight: bold;
+                .project-card-label {
+                    font-weight: bolder;
+                    color: #333333;
                 }
-                .project-card-marker {
+                .project-type-marker {
                     padding-top: 16px;
                 }
                 .project-card-img {

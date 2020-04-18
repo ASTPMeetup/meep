@@ -1,17 +1,39 @@
 import React from 'react';
 import ProjectTypeMarker from '../../../helpers/projectTypeMarker';
+import { removeTypeFilter, addTypeFilter } from '../../../../actions/filters';
+import { connect } from 'react-redux';
 
-const CheckBoxRow = ({ Label, ProjectType, checked, toggleView }) => (
-    <div id="checkbox-container">
-        <input className="hidden-checkbox" type="checkbox" checked={checked} onChange={toggleView} />
-        <div className="styled-checkbox">
-            <svg className={`icon ${checked ? "show-checked" : "hide-checked"}`} viewBox="0 0 24 24" >
-                <polyline points="20 6 9 17 4 12" />
-            </svg>
+const CheckBoxRow = (props) => {
+    const { Checked, Label, ProjectType } = props;
+
+    const handleCheckedEvent = () => {
+        (Checked) ?
+            props.dispatch(removeTypeFilter(ProjectType)) :
+            props.dispatch(addTypeFilter(ProjectType));
+    }
+
+    return (
+        <div className="checkbox-container" onClick={handleCheckedEvent}>
+            <input className="hidden-checkbox" type="checkbox" defaultChecked={Checked}/>
+            <div className="styled-checkbox">
+                <svg className={`icon ${Checked ? "show-checked" : "hide-checked"}`}
+                     viewBox="0 0 24 24" >
+                    <polyline points="20 6 9 17 4 12" />
+                </svg>
+            </div>
+            <span className="style-span">{Label}</span>
+            <span className="project-type-marker">
+                <ProjectTypeMarker FillClass={ProjectType}/> 
+            </span>
         </div>
-        <span className="style-span">{Label}</span>
-        <ProjectTypeMarker FillClass={ProjectType}/> 
-    </div>
-);
+    );
+};
 
-export default CheckBoxRow;
+const mapStateToProps = (state, ownProps) => {    
+    return {
+        ...ownProps,
+        Checked: state.filters.types.length && state.filters.types.includes(ownProps.ProjectType)
+    }
+}
+
+export default connect(mapStateToProps)(CheckBoxRow);

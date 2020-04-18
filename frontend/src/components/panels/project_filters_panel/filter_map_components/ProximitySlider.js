@@ -1,10 +1,11 @@
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import { setRangeFilter } from '../../../../actions/filters';
+import { setMapZoom } from '../../../../actions/map';
 const Handle = Slider.Handle;
 
 const dotStyle = {
@@ -15,53 +16,58 @@ const dotStyle = {
     'marginLeft': '-1px',
 };
 
-const displayProximityValueToolTip = (sliderProps) => {
-	const { value, dragging, index, key, className, disabled, offset, prefixCls } = sliderProps;
-	return (
-		<Tooltip
-			prefixCls="rc-slider-tooltip"
-			overlay={value}
-			visible={dragging}
-			placement="top"
-			key={index}>
-			<Handle value={value} index={index} key={key} className={className} disabled={disabled} offset={offset} prefixCls={prefixCls}/>
-		</Tooltip>
-	);
-};
+const displayProximityValueToolTip = ({ value, dragging, index, key, className, disabled, offset, prefixCls }) => (
+	<Tooltip
+		prefixCls="rc-slider-tooltip"
+		overlay={value}
+		visible={dragging}
+		placement="top"
+		key={index}>
+		<Handle value={value} index={index} key={key} className={className} disabled={disabled} offset={offset} prefixCls={prefixCls}/>
+	</Tooltip>
+);
 
-class ProximitySlider extends React.Component {
+class ProximitySlider extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			minValue: 10,
-			maxValue: 100,
+			minValue: 0,
+			maxValue: 50,
             steps: 10
 		}
 	}
+
 	marks(minValue, maxValue) {
-	  let miLabels = [];
+	  let mileMarks = [];
 	  for (let i = minValue; i <= maxValue; i++ ) {
 	    if (i == minValue || i == maxValue || i % this.state.steps == 0) {
-	      miLabels.push(i);
+			mileMarks.push(i);
 	    }
 	  }
-	  return miLabels.reduce(function(result, year) {
-	    result[year] = year.toString();
-	    return result;
+	 
+	  return mileMarks.reduce(function(mark, value) {
+	    mark[value] = {label: value + ' mi'};
+	    return mark;
 	  }, {});
 	}
+
+	handleProximityChange = (value) => {
+		this.props.dispatch(setRangeFilter(value));
+		this.props.dispatch(setMapZoom(value));
+	}
+
 	render() {
 		return (
-			<div>
+			<div className="range-container">
 				<Slider 
 					min={this.state.minValue}
 					max={this.state.maxValue}
 					step={this.state.steps}
 					marks={this.marks(this.state.minValue, this.state.maxValue)}
 					dotStyle={dotStyle}
-					defaultValue={this.props.filters.range}
+					defaultValue={this.props.range}
 					handle={displayProximityValueToolTip}
-					onChange={(value) => { this.props.dispatch(setRangeFilter(value))}}
+					onChange={(value) => { this.handleProximityChange(value)}}
 				/>
 			</div>
 		);
@@ -69,7 +75,7 @@ class ProximitySlider extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        filters: state.filters
+        range: state.filters.range
     }
 }
 

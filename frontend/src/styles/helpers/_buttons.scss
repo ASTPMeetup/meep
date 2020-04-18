@@ -1,26 +1,49 @@
 .custom-btn {
-    &.custom-btn-primary {
-        font-size: .75rem;
-        padding: .375rem 1.5rem;
+    &.custom-btn-primary, &.custom-btn-primary-large {
+        font-size: 1rem;
+        padding: .75rem 1.5rem;
         background: #509646;
         border: 1px solid transparent;
         color: #ffffff;
-        font-size: .75rem;
-        padding: .375rem 1.5rem;
         border-radius: 0;
         margin-top: .5rem;
         margin-bottom: .5rem;
         margin-right: .5rem;
     }
-    &.custom-btn-secondary {
+    &.custom-btn-secondary, &.custom-btn-secondary-large {
         background: #ffffff;
         color: #509646;
         border: 2px solid #509646;
-        font-size: .75rem;
-        padding: .375rem 1.5rem;
+        font-size: 1rem;
+        padding: .75rem 1.5rem;
         border-radius: 0;
         margin-top: .5rem;
         margin-bottom: .5rem;
         margin-right: .5rem;
+    }
+    &.custom-btn-quaternary, &.custom-btn-trinary-large {
+        font-size: 1rem;
+        background: #1b2661;
+        border: 1px solid transparent;
+        color: #ffffff;
+        padding: .75rem 1.5rem;
+        border-radius: 0;
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+        margin-right: .5rem;
+    }
+    &.custom-btn-quaternary, &.custom-btn-quaternary-large {
+        background: #ffffff;
+        color: #1b2661;
+        border: 2px solid #1b2661;
+        font-size: 1rem;
+        padding: .75rem 1.5rem;
+        border-radius: 0;
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+        margin-right: .5rem;
+    }
+    &.custom-btn-primary-large,  &.custom-btn-secondary-large, &.custom-btn-trinary-large, &.custom-btn-quaternary-large {
+        width: 100%;
     }
 }

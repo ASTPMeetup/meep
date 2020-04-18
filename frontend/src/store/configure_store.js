@@ -1,8 +1,10 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import locationsReducer from '../reducers/locations';
 import filtersReducer from '../reducers/filters';
 import projectsReducer from '../reducers/projects';
 import projectDetailsReducer from '../reducers/project_details';
+import mapSettingsReducer from '../reducers/map';
+import thunk from 'redux-thunk';
 
 export default () => {
   const store = createStore(
@@ -10,8 +12,10 @@ export default () => {
       locations: locationsReducer,
       projects: projectsReducer,
       selected_project: projectDetailsReducer,
-      filters: filtersReducer
-    })
+      filters: filtersReducer,
+      map_state: mapSettingsReducer
+    }),
+    applyMiddleware(thunk)
   );
   return store;
 };

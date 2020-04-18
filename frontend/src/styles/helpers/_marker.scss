@@ -1,12 +1,24 @@
 .location-marker, .project-type-marker {
-    .default, .infrastructure {
+    .default, .dark-blue {
         fill: #1b2661;
     }
-    .building {
-        fill: #fdce06;
+    .dark-green {
+        fill: #00700f;
     }
-    .vehicle {
+    .purple {
+        fill: #681980;
+    }
+    .red-orange {
+        fill: #cc0000;
+    }
+    .baby-blue {
         fill: #318bd6;
+    }
+    .pink {
+        fill: #ff1aff;
+    }
+    .orange {
+        fill: #ff9900;
     }
 }
 

@@ -1,37 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import { MeepService } from '../../../../services/meep_service';
+import { geo_service } from '../../../../services/geo_service';
+import { setMapCenter } from '../../../../actions/map';
+import { setZipCode, setLatLngCoordinates } from '../../../../actions/filters';
+import { fetchGeoData, configGeoDataProps, setGeoDataCookies } from '../../../../utilities/geo_utilities';
+import { connect } from 'react-redux';
 
-const meep_service = new MeepService();
+const ZipLookUpField = (props) => {
+    useEffect(() => {
+        fetchGeoData().then(geo_data => {
+            configGeoDataProps(geo_data).then(geo_data_props => {
+                const lat_lng = {lat: geo_data_props.latitude, lng: geo_data_props.longitude};
+                props.dispatch(setMapCenter(lat_lng));
+                props.dispatch(setLatLngCoordinates(lat_lng));
+                props.dispatch(setZipCode(geo_data_props.zipcode));
+                setGeoDataCookies(geo_data_props);
+            })
+        });
+    }, []);
 
-class ZipLookUpField extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    setMapCenterWithZipCode = (zipcode) => {
+    const setMapCenterWithZipCode = (zipcode) => {
         const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcode);
-
+        
         if(isValidZip) {
-            meep_service.getGeoDataByZipCode(zipcode).then(data => {
-                console.log(data);
+            geo_service.fetchGeoDataByZipCode(zipcode).then(lat_lng => {
+                if(lat_lng.hasOwnProperty('lat') && lat_lng.hasOwnProperty('lng')) {
+                    props.dispatch(setMapCenter(lat_lng));
+                    props.dispatch(setLatLngCoordinates(lat_lng));
+                    const geo_data_props = {latitude: lat_lng.lat, longitude: lat_lng.lng, zipcode: zipcode};
+                    setGeoDataCookies(geo_data_props);
+                }
             });
-        } else {
-            console.log('invalid zipcode');
         }
+        props.dispatch(setZipCode(zipcode));
     }
 
-    render() {
-        return (
-            <InputGroup size="sm" className="my-1">
-                <FormControl 
-                    aria-label="Small" 
-                    aria-describedby="inputGroup-sizing-sm"
-                    onBlur={(e) => this.setMapCenterWithZipCode(e.target.value)}/>
-            </InputGroup>
-        );
-    }
+    return (
+        <InputGroup size="sm" className="my-2">
+            <FormControl 
+                aria-label="zipcode lookup" 
+                value={props.zipcode}
+                onChange={(e) => setMapCenterWithZipCode(e.target.value)}/>
+        </InputGroup>
+    );
 }
 
-export default ZipLookUpField;
+const mapStateToProps = (state, ownProps) => {
+    return { 
+        ...ownProps,
+        zipcode: state.filters.zipcode
+    }
+};
+
+export default connect(mapStateToProps)(ZipLookUpField);
