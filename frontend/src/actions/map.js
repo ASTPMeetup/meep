@@ -13,9 +13,9 @@ export const setMapZoom = (proximity = 0) => ({
 
 const calculateMapZoomWithProximity = (proximity) => {
     proximity = parseInt(proximity);
-    let zoom =  10;
+    let zoom =  9;
 
-     if (proximity <= 5) {
+    if (proximity <= 5) {
         zoom = 13;
     } 
     else if (proximity <= 10) {
@@ -23,6 +23,9 @@ const calculateMapZoomWithProximity = (proximity) => {
     }
     else if (proximity <= 20) {
         zoom = 11;
+    }
+    else if (proximity <= 45) {
+        zoom = 10;
     }
     return zoom;
 }

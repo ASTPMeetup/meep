@@ -13,7 +13,43 @@ html, body {
     line-height: normal;
     color: #666666;
 
+    h1 {
+        color: #509646;
+    }
+
+    p { 
+        font-size: 1rem;
+        word-break: break-word;
+    }
+
     #map_container {
         padding: 0;
     }
+}
+
+@media screen and (max-width: 768px) {
+    #app_container {
+        #map_container {
+            display: none;
+        }
+        .btn-primary {
+            width: 100%;
+            min-height: 3rem;
+            font-size: 1rem;
+        }
+        .project-type-marker {
+            display: none;
+        }
+
+        #project_filters_panel {     
+            .checkbox-container {
+                max-width: 80%;
+            }
+        }
+        #project_list_container {
+            .project_list_filter {
+                display: none;
+            }
+        }
+    }  
 }

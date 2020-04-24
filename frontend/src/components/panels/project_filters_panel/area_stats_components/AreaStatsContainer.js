@@ -4,13 +4,12 @@ import { selectProjectLocations } from '../../../../selectors/locations';
 import SubHeader from "../../../helpers/SubHeader";
 
 const StatsContainer = ({ number_of_locations }) => {
-    const stat_string = number_of_locations + ' of projects in your area';
-
+    const stat_string = number_of_locations + ' projects in your area';
     return (
         <div className="stats-container text-center">
             <SubHeader Text={stat_string}/>
         </div>
-    )
+    );
 };
 
 const mapStateToProps = (state, ownProps) => {

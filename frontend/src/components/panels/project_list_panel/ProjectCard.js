@@ -4,6 +4,7 @@ import SubHeader from '../../helpers/SubHeader';
 import { ProjectTypePropsMap } from '../../../utilities/project_types';
 
 const ProjectCard = ({ Name, Type, GHG_Reduced, GGE_Reduced }) => {
+    const ProjectType = ProjectTypePropsMap[Type] ? ProjectTypePropsMap[Type].label : 'Project';
     return (
         <div className="project-card">
             <div className="row">
@@ -17,7 +18,7 @@ const ProjectCard = ({ Name, Type, GHG_Reduced, GGE_Reduced }) => {
                 </div>
                 <div className="col-12 col-lg-10 flush-left">
                     <p>
-                        <span className="project-card-label">Type:</span>&nbsp;{ProjectTypePropsMap[Type].label}</p>
+                        <span className="project-card-label">Type:</span>&nbsp;{ProjectType}</p>
                     <p>
                         <span className="project-card-label">GHG Reduced:</span>&nbsp;{GHG_Reduced}
                     </p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import { connect } from 'react-redux';
 import { MeepService } from '../../../services/meep_service';
@@ -7,6 +7,7 @@ import { withRouter} from 'react-router-dom';
 import { selectProjectLocations } from '../../../selectors/locations';
 import { GoogleMapsAPIKey } from '../../../../private/google_maps';
 import { ProjectTypePropsMap } from '../../../utilities/project_types';
+import { getLocations } from '../../../actions/locations';
 
 const meep_service = new MeepService();
 
@@ -20,6 +21,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const MyMapComponent = connect(mapStateToProps)(withScriptjs(withGoogleMap((props) => {
     const { map_state, locations } = props;
+
+    useEffect(() => {
+        props.dispatch(getLocations());
+    }, []);
 
     const dispatchProjectSummary = (location) => {
         meep_service.getProjectDetailsById(location.project_id).then(data => {

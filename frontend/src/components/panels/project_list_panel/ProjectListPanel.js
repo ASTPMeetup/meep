@@ -28,13 +28,13 @@ class ProjectListPanel extends Component {
         return (
             <div id="project_list_container">
                 <BackToLink Route="/filters" Text="Back to filters"/>
-                <Header Text="Results That Match Your Search"/>
+                <Header Text="Projects That Match Your Search"/>
                 <div className="row">
                     <div className="col">
                         <InputGroup size="sm" className="my-2 project_list_filter">
                             <FormControl 
-                                aria-label="search text"
-                                placeholder="search results.." 
+                                aria-label="search projects"
+                                placeholder="search projects.." 
                                 value={this.props.search_text}
                                 onChange={(e) => this.props.dispatch(setSearchText(e.target.value))}/>
                         </InputGroup>

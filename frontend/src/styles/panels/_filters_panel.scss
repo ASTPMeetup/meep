@@ -19,14 +19,14 @@
         }
     }
     .range-container {
-        margin: 1rem;
+        margin: 1rem 1rem 3rem 1rem;
     }
 }
 
 .checkbox-container {
     max-width: 50%;
-    cursor: pointer;
     margin: 1rem 0;
+    cursor: pointer;
     
     .hidden-checkbox{
         border: 0;
@@ -55,7 +55,8 @@
         padding-bottom: 0.5rem;
         padding-right: 0.125rem;
     }
-    .style-span{
+    .style-span {
+        font-size: .8rem;
         margin-left: 0.5rem;
     }
     .show-checked {

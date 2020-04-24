@@ -7,7 +7,7 @@
  */
  
 const withinProximity = (point, interest, miles) => {
-     if(interest !== null) {
+     if(interest) {
           const kms = miles * 1.60934;
           let R = 6371;
           let deg2rad = (n) => { return Math.tan(n * (Math.PI/180)) };

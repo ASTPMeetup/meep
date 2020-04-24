@@ -37,7 +37,7 @@ const ZipLookUpField = (props) => {
     }
 
     return (
-        <InputGroup size="sm" className="my-2">
+        <InputGroup size="sm" className="my-3">
             <FormControl 
                 aria-label="zipcode lookup" 
                 value={props.zipcode}

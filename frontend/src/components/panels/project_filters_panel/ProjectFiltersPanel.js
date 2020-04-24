@@ -16,11 +16,13 @@ const ProjectFiltersPanel = (props) => {
             <div className="project-filters">
                 <Header Text="Filter The Map View"/>
                 <div className="row">
-                    <div className="col-5">
+                    <div className="col-6">
                         <SubHeader Text="Zip Code"/>
                         <ZipLookUpField/>
                     </div>
-                    <div className="col-7">
+                </div>
+                <div className="row">
+                    <div className="col">
                         <SubHeader Text="Proximity"/>
                         <ProximitySlider/>
                     </div>
