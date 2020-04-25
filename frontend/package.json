@@ -8,7 +8,7 @@
     "dev-server": "webpack-dev-server",
     "start": "node server/server.js",
     "heroku-postbuild": "yarn run build:prod",
-    "heroku-prebuild": "cd frontend && yarn install"
+    "postinstall": "cd frontend && yarn install"
   },
   "dependencies": {
     "autoprefixer": "^9.4.9",
