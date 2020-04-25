@@ -9,7 +9,9 @@ const IconRow = ({ Text, IconType}) => (
                 : <LocationMarker FillClass={IconType}/>
             }
         </div>
-        <div className="col-10 flush-left">{Text}</div>
+        <div className="col-10 flush-left">
+            <p>{Text}</p>
+        </div>
     </div>
 );
 
