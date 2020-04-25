@@ -5,10 +5,7 @@
   "scripts": {
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
-    "dev-server": "webpack-dev-server",
-    "start": "node server/server.js",
-    "heroku-postbuild": "yarn run build:prod",
-    "postinstall": "cd frontend && yarn install"
+    "dev-server": "webpack-dev-server"
   },
   "dependencies": {
     "autoprefixer": "^9.4.9",

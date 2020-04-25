@@ -3,6 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-      "postinstall": "cd frontend && yarn install"
+      "postinstall": "cd frontend && yarn install",
+      "start": "node frontend/server/server.js",
+      "heroku-postbuild": "cd frontend && yarn run build:prod"
     }
 }
