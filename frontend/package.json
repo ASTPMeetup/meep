@@ -38,10 +38,10 @@
     "style-loader": "^0.23.1",
     "uuid": "^3.3.3",
     "webpack": "3.1.0",
-    "webpack-dev-server": "2.5.1"
+    "webpack-dev-server": "2.5.1",
+    "node-sass": "^4.14.0"
   },
   "devDependencies": {
-    "node-sass": "^4.14.0",
     "webpack-bundle-analyzer": "^3.7.0"
   }
 }
