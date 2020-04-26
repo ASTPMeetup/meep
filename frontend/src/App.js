@@ -8,7 +8,7 @@ const App = () => {
     <div id="app_container">
       <div className="container-fluid">
         <div className="row">
-          <section className="col-4" id="side_panel_container">
+          <section className="col-12 col-lg-4" id="side_panel_container">
             <Switch>
               <Route path="/" component={WelcomePanel} exact={true} />
               <Route path="/filters" component={ProjectFiltersPanel} />
@@ -16,7 +16,7 @@ const App = () => {
               <Route path="/details" component={ProjectDetailsPanel} />
             </Switch>
           </section>
-          <section className="col-8" id="map_container">
+          <section className="col-lg-8" id="map_container">
             <MapContainer/>
           </section>
         </div>
